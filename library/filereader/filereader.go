@@ -19,6 +19,7 @@ func SettingsRead(path string) map[string]string {
 			key, value := strings.Trim(chunc[0], "\t "), strings.Trim(chunc[1], "\t ")
 
 			last := len(value) - 1
+
 			if last > 0 && value[0] == '"' && value[last] == '"' {
 				value = string(value[1:last])
 			}

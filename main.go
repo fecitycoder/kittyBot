@@ -8,6 +8,6 @@ import (
 
 func main() {
 	progSettings := filereader.SettingsRead("settings.ini")
-	botapi.InitBot(&progSettings["botTocken"])
+	botapi.InitBot(progSettings["botTocken"])
 
 }
