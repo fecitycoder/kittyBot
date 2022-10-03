@@ -44,8 +44,9 @@ type SendMessageT struct {
 			UserName  string `json:"user_name"`
 			Type      string `json:"type"`
 		} `json:"chat"`
-		Date int `json:"date"`
-	} `json:result"`
+		Date int    `json:"date"`
+		Text string `json:"text"`
+	} `json:"result"`
 }
 
 type getUpdatesT struct {
