@@ -1,15 +1,14 @@
 package botapi
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 const telegramBaseUrl = "https://api.telegram.org/bot"
-const methodGetMe = "getMe"
-const methodGetUpdates = "getUpdates"
-const methodSendMessage = "sendMessage"
 
 var botTocken string
 
@@ -49,7 +48,7 @@ type SendMessageT struct {
 	} `json:"result"`
 }
 
-type getUpdatesT struct {
+type GetUpdatesT struct {
 	Ok     bool `json:"ok"`
 	Result []struct {
 		UpdateID int `json:"update_id"`
@@ -70,6 +69,8 @@ type getUpdatesT struct {
 				UserName  string `json:"user_name"`
 				Type      string `json:"type"`
 			} `json:"chat"`
+			Date int    `json:"date"`
+			Text string `json:"text"`
 		} `json:"message,omitempty"`
 	} `json:"result"`
 }
@@ -87,6 +88,7 @@ func getBodyByUrl(url string) []byte {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
@@ -94,4 +96,38 @@ func getBodyByUrl(url string) []byte {
 		fmt.Println(err.Error())
 	}
 	return body
+}
+
+func GetMe() {
+	body := getBodyByUrl(getUrlByMethod("getMe"))
+	getMe := GetMeT{}
+	err := json.Unmarshal(body, &getMe)
+	if err != nil {
+		fmt.Printf("Error unmarshalling: %s", err.Error())
+	}
+	fmt.Printf("%v", getMe)
+}
+
+func GetUpdate() ([]string, int) {
+	var lastMessage []string
+	var id int
+	body := getBodyByUrl(getUrlByMethod("getUpdates"))
+	getUpdates := GetUpdatesT{}
+	err := json.Unmarshal(body, &getUpdates)
+	if err != nil {
+		fmt.Printf("Error unmarshalling: %s", err.Error())
+	}
+	for _, update := range getUpdates.Result {
+		lastMessage = append(lastMessage, fmt.Sprintf("%v", update.Message.Text))
+		id = update.Message.Chat.ID
+	}
+
+	return lastMessage, id
+}
+
+func SendMessage(chatId int, message string) {
+	url := getUrlByMethod("sendMessage")
+	url = url + "?chat_id=" + strconv.Itoa(chatId) + "&text=" + message
+	getBodyByUrl(url)
+
 }
