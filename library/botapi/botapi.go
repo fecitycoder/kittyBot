@@ -12,8 +12,8 @@ const telegramBaseUrl = "https://api.telegram.org/bot"
 
 var botTocken string
 
-func InitBot(tocken string) {
-	botTocken = tocken
+func InitBot(tocken *string) {
+	botTocken = *tocken
 }
 
 func getUrlByMethod(methodName string) string {
@@ -45,9 +45,8 @@ func GetMe() {
 	fmt.Printf("%v", getMe)
 }
 
-func GetUpdate() ([]string, int) {
+func GetUpdate(id *int) []string {
 	var lastMessage []string
-	var id int
 	body := getBodyByUrl(getUrlByMethod("getUpdates"))
 	getUpdates := GetUpdatesT{}
 	err := json.Unmarshal(body, &getUpdates)
@@ -56,15 +55,15 @@ func GetUpdate() ([]string, int) {
 	}
 	for _, update := range getUpdates.Result {
 		lastMessage = append(lastMessage, fmt.Sprintf("%v", update.Message.Text))
-		id = update.Message.Chat.ID
+		*id = update.Message.Chat.ID
 	}
-
-	return lastMessage, id
+	getBodyByUrl(getUrlByMethod("setWebhook?drop_pending_updates=true"))
+	return lastMessage
 }
 
-func SendMessage(chatId int, message string) {
+func SendMessage(chatId *int, message string) {
 	url := getUrlByMethod("sendMessage")
-	url = url + "?chat_id=" + strconv.Itoa(chatId) + "&text=" + message
+	url = url + "?chat_id=" + strconv.Itoa(*chatId) + "&text=" + message
 	getBodyByUrl(url)
 
 }
