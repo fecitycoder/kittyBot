@@ -12,8 +12,8 @@ const telegramBaseUrl = "https://api.telegram.org/bot"
 
 var botTocken string
 
-func InitBot(tocken *string) {
-	botTocken = *tocken
+func InitBot(tocken string) {
+	botTocken = tocken
 }
 
 func getUrlByMethod(methodName string) string {
@@ -45,21 +45,33 @@ func GetMe() {
 	fmt.Printf("%v", getMe)
 }
 
-func GetUpdate(id *int) []string {
-	var lastMessage []string
+func (getUpdates *GetUpdatesT) GetUpdate() {
+	// Формируем url запроса и получаем ответ, который складываем в body
 	body := getBodyByUrl(getUrlByMethod("getUpdates"))
-	getUpdates := GetUpdatesT{}
-	err := json.Unmarshal(body, &getUpdates)
+	err := json.Unmarshal(body, getUpdates)
 	if err != nil {
 		fmt.Printf("Error unmarshalling: %s", err.Error())
 	}
-	for _, update := range getUpdates.Result {
-		lastMessage = append(lastMessage, fmt.Sprintf("%v", update.Message.Text))
-		*id = update.Message.Chat.ID
-	}
-	getBodyByUrl(getUrlByMethod("setWebhook?drop_pending_updates=true"))
-	return lastMessage
 }
+
+// func GetUpdate() []string {
+// 	var lastMessage []string
+// 	// Тут формируем url запроса и получаем body
+// 	body := getBodyByUrl(getUrlByMethod("getUpdates"))
+// 	getUpdates := GetUpdatesT{}
+// 	// Тут наш body парсим из json в подготовленный слайс структур
+// 	err := json.Unmarshal(body, &getUpdates)
+// 	if err != nil {
+// 		fmt.Printf("Error unmarshalling: %s", err.Error())
+// 	}
+
+// 	//Тут пробежимся по слайсу и
+// 	for _, update := range getUpdates.Result {
+// 		lastMessage = append(lastMessage, fmt.Sprintf("%v", update.Message.Text))
+// 	}
+
+// 	return lastMessage
+// }
 
 func SendMessage(chatId *int, message string) {
 	url := getUrlByMethod("sendMessage")
