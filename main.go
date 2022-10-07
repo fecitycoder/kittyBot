@@ -17,7 +17,7 @@ func main() {
 
 	for _, messmessage := range messageQuerry.Result {
 		lastMessages = append(lastMessages, fmt.Sprintf("%v", messmessage.Message.Text))
-		fmt.Println(lastMessages)
+		fmt.Println(messmessage.Message.Chat.ID, lastMessages)
 		botapi.ClearQueue()
 	}
 
