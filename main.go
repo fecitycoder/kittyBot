@@ -13,11 +13,12 @@ func main() {
 	messageQuerry := new(botapi.GetUpdatesT)
 	messageQuerry.GetUpdate()
 
-	var lastMessage []string
+	var lastMessages []string //
 
 	for _, messmessage := range messageQuerry.Result {
-		lastMessage = append(lastMessage, fmt.Sprintf("%v", messmessage.Message.Text))
-		fmt.Println(lastMessage)
+		lastMessages = append(lastMessages, fmt.Sprintf("%v", messmessage.Message.Text))
+		fmt.Println(lastMessages)
+		botapi.ClearQueue()
 	}
 
 }
