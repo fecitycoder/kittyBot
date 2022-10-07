@@ -2,24 +2,25 @@ package weatherapi
 
 var (
 	Condition = map[string]string{
-		"clear":                            "ясно",
-		"partly-cloudy":                    "малооблачно",
-		"cloudy":                           "облачно с прояснениями",
-		"overcast":                         "пасмурно",
-		"partly-cloudy-and-light-rain":     "малооблачно, небольшой дождь",
-		"partly-cloudy-and-rain":           "малооблачно, дождь",
-		"overcast-and-rain":                "значительная облачность, сильный дождь",
-		"overcast-thunderstorms-with-rain": "сильный дождь с грозой",
-		"cloudy-and-light-rain":            "облачно, небольшой дождь",
-		"overcast-and-light-rain ":         "значительная облачность, небольшой дождь",
-		"cloudy-and-rain":                  "облачно, дождь",
-		"overcast-and-wet-snow":            "дождь со снегом",
-		"partly-cloudy-and-light-snow":     "небольшой снег",
-		"partly-cloudy-and-snow":           "малооблачно, снег",
-		"overcast-and-snow":                "снегопад",
-		"cloudy-and-light-snow":            "облачно, небольшой снег",
-		"overcast-and-light-snow":          "значительная облачность, небольшой снег",
-		"cloudy-and-snow":                  "облачно, снег",
+		"clear":                  "ясно",
+		"partly-cloudy":          "малооблачно",
+		"cloudy":                 "облачно с прояснениями",
+		"overcast":               "пасмурно",
+		"drizzle":                "морось",
+		"light-rain":             "небольшой дождь",
+		"rain":                   "дождь",
+		"moderate-rain":          "умеренно сильный дождь",
+		"heavy-rain":             "сильный дождь",
+		"continuous-heavy-rain":  "длительный сильный дождь",
+		"showers":                "ливень",
+		"wet-snow":               "дождь со снегом",
+		"light-snow":             "небольшой снег",
+		"snow":                   "снег",
+		"snow-showers":           "снегопад",
+		"hail":                   "град",
+		"thunderstorm":           "гроза",
+		"thunderstorm-with-rain": "дождь с грозой",
+		"thunderstorm-with-hail": "гроза с градом",
 	}
 
 	Daytime = map[string]string{"d": "светлое время суток", "n": "темное время суток"}
@@ -36,6 +37,32 @@ var (
 		"sw": "юго-западное",
 		"w":  "западное",
 		"с":  "штиль",
+	}
+
+	MoonText = map[string]string{
+		"moon-code-0":  "полнолуние",
+		"moon-code-1":  "убывающая луна",
+		"moon-code-2":  "убывающая луна",
+		"moon-code-3":  "убывающая луна",
+		"moon-code-4":  "последняя четверть",
+		"moon-code-5":  "убывающая луна",
+		"moon-code-6":  "убывающая луна",
+		"moon-code-7":  "убывающая луна",
+		"moon-code-8":  "новолуние",
+		"moon-code-9":  "растущая луна",
+		"moon-code-10": "растущая луна",
+		"moon-code-11": "растущая луна",
+		"moon-code-12": "первая четверть",
+		"moon-code-13": "растущая луна",
+		"moon-code-14": "растущая луна",
+		"moon-code-15": "растущая луна",
+	}
+
+	PartName = map[string]string{
+		"night":   "ночь",
+		"morning": "утро",
+		"day":     "день",
+		"evening": "вечер",
 	}
 )
 
@@ -56,12 +83,41 @@ type WeatherQueryT struct {
 		Wind_speed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
 		Wind_gust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
 		Wind_dir     string  `json:"wind_dir"`    // Направление ветра
-		Pressure_mm  int8    `json:"pressure_mm"` // Давление (в мм рт.ст.).
-		Pressure_pa  int8    `json:"pressure_pa"` // Давление (в гексопаскалях).
-		Humidity_mm  int8    `json:"humidity_mm"` // Влажность воздуха
+		Pressure_mm  uint8   `json:"pressure_mm"` // Давление (в мм рт.ст.).
+		Pressure_pa  uint8   `json:"pressure_pa"` // Давление (в гексопаскалях).
+		Humidity     uint8   `json:"humidity_mm"` // Влажность воздуха
 		Daytime      string  `json:"daytime"`     // Время суток
 		Polar        bool    `json:"polar"`       // Признак того, что время суток, указанное в поле daytime является полярным.
 		Season       string  `json:"season"`      // Время года в данном населенном пункте
 	} `json:"fact"` //	Объект содержит информацию о погоде на данный момент
+	Forecast struct {
+		DateUnix uint32 `json:date_ts"`    // Дата прогноза погоды в формате Unixtime
+		Date     string `json:date"`       // Дата прогноза в формате ГГГГ-ММ-ДД
+		Week     uint8  `json:"week"`      // Порядковый номер недели
+		Sunrise  string `json:"sunrise"`   // Время восхода Солнца, локальное время (может отсутствовать для полярныйх регионов)
+		Sunset   string `json:"sunset"`    // Время заката Солнца, локальное время (может отсутствовать для полярныйх регионов)
+		MoonCode uint8  `json:moon_code"`  // Код фазы луны
+		MoonText string `json:"moon_text"` // Текстовый код фазы луны
+		Parts    []struct {
+			PartName    string  `json:"part_name"`   // Название времени суток
+			TempMin     int8    `json:"temp_min"`    // Минимальная температура для времени суток
+			TempMax     int8    `json:"temp_max"`    // Максимальная температура для времени суток
+			TempAvg     int8    `json:"temp_avg"`    // Средняя температура для времени суток
+			WindSpeed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
+			WindGust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
+			WindDir     string  `json:"wind_dir"`    // Направление ветра
+			Pressure_mm uint8   `json:"pressure_mm"` // Давление (в мм рт.ст.).
+			Pressure_pa uint8   `json:"pressure_pa"` // Давление (в гексопаскалях).
+			Humidity    uint8   `json:"humidity_mm"` // Влажность воздуха
+			Prec_mm     uint8   `json:"prec_mm"`     // Прогнозируемое количество осадков
+			Prec_prob   uint8   `json:"prec_prob"`   // Вероятность выпадения осадков
+			Prec_period uint8   `json:"prec_period"` // Прогнозируемый период осадков
+			Icon        string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
+			Condition   string  `json:"conditions"`  // Код погодного описания
+			FeelsLike   int8    `json:"feels_like"`  // Температура по ощущеметру для всемени суток
+			Daytime     string  `json:"daytime"`     // Время суток
+			Polar       bool    `json:"polar"`       // Признак того, что время суток, указанное в поле daytime является полярным.
+		} `json:"parts"` // Прогнозы по временам суток
+	} `json:"forecast"` //	Объект содержит данные прогноза погоды
 
 }
