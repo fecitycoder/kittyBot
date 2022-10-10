@@ -3,12 +3,12 @@ package main
 // Импортирум модули
 import (
 	"fmt"
-	"mykittybot/library/botapi"
-	"mykittybot/library/filereader"
+	"mykittybot/pkg/botapi"
+	"mykittybot/pkg/filereader"
 )
 
 func main() {
-	progSettings := filereader.SettingsRead("settings.ini")
+	progSettings := filereader.SettingsRead("../../settings.ini")
 	botapi.InitBot(progSettings["botTocken"])
 	messageQuerry := new(botapi.GetUpdatesT)
 	messageQuerry.GetUpdate()
