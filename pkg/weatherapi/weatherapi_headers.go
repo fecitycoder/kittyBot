@@ -76,7 +76,7 @@ type WeatherQueryT struct {
 	} `json:"info"` //
 	Fact struct {
 		TimeUnix     uint32  `json:"obs_time"`    // Время замера погодных данных в Unix формате
-		Temp         int16   `json:"temp"`        // Температура в ((С)
+		Temp         int16   `json:"temp"`        // Температура в (С)
 		TempFeelLike int16   `json:"feel_like"`   // Температура по ощущеметру
 		Icon         string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
 		Conditions   string  `json:"conditions"`  // Код погодного описания
