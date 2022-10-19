@@ -70,9 +70,9 @@ type WeatherQueryT struct {
 	ServerTimeUnix uint32 `json:"now"`    // Время сервера в Unix формате
 	ServerTimeDT   string `json:"now_dt"` // Время сервера в формате Data time
 	Info           struct {
-		Url       string `json:"url"`
-		Lattitude string `json:"lat"`
-		Longitude string `json:"lon"`
+		Url       string  `json:"url"`
+		Lattitude float32 `json:"lat"`
+		Longitude float32 `json:"lon"`
 	} `json:"info"` //
 	Fact struct {
 		TimeUnix     uint32  `json:"obs_time"`    // Время замера погодных данных в Unix формате
@@ -91,12 +91,12 @@ type WeatherQueryT struct {
 		Season       string  `json:"season"`      // Время года в данном населенном пункте
 	} `json:"fact"` //	Объект содержит информацию о погоде на данный момент
 	Forecast struct {
-		DateUnix uint32 `json:date_ts"`    // Дата прогноза погоды в формате Unixtime
-		Date     string `json:date"`       // Дата прогноза в формате ГГГГ-ММ-ДД
+		DateUnix uint32 `json:"date_ts"`   // Дата прогноза погоды в формате Unixtime
+		Date     string `json:"date"`      // Дата прогноза в формате ГГГГ-ММ-ДД
 		Week     uint16 `json:"week"`      // Порядковый номер недели
 		Sunrise  string `json:"sunrise"`   // Время восхода Солнца, локальное время (может отсутствовать для полярныйх регионов)
 		Sunset   string `json:"sunset"`    // Время заката Солнца, локальное время (может отсутствовать для полярныйх регионов)
-		MoonCode uint16 `json:moon_code"`  // Код фазы луны
+		MoonCode uint8  `json:"moon_code"` // Код фазы луны
 		MoonText string `json:"moon_text"` // Текстовый код фазы луны
 		Parts    []struct {
 			PartName    string  `json:"part_name"`   // Название времени суток
@@ -109,7 +109,7 @@ type WeatherQueryT struct {
 			Pressure_mm uint16  `json:"pressure_mm"` // Давление (в мм рт.ст.).
 			Pressure_pa uint16  `json:"pressure_pa"` // Давление (в гексопаскалях).
 			Humidity    uint16  `json:"humidity_mm"` // Влажность воздуха
-			Prec_mm     uint16  `json:"prec_mm"`     // Прогнозируемое количество осадков
+			Prec_mm     float32 `json:"prec_mm"`     // Прогнозируемое количество осадков
 			Prec_prob   uint16  `json:"prec_prob"`   // Вероятность выпадения осадков
 			Prec_period uint16  `json:"prec_period"` // Прогнозируемый период осадков
 			Icon        string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
