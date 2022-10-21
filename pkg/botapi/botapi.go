@@ -64,5 +64,10 @@ func SendMessage(chatId *int, message string) {
 	url := getUrlByMethod("sendMessage")
 	url = url + "?chat_id=" + strconv.Itoa(*chatId) + "&text=" + message
 	getBodyByUrl(url)
+}
 
+func SendPhotoByIrl(chatId *int, photo string) {
+	url := getUrlByMethod("sendPhoto")
+	url = url + "?chat_id=" + strconv.Itoa(*chatId) + "&photo=" + photo
+	getBodyByUrl(url)
 }
