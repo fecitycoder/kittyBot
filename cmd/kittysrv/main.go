@@ -6,6 +6,8 @@ import (
 	kitty "mykittybot/pkg/botapi"
 	"mykittybot/pkg/filereader"
 	"mykittybot/pkg/weatherapi"
+    "strconv"
+    "strings"
 )
 
 func main() {
@@ -17,9 +19,9 @@ func main() {
 	var ids []int
 
 	messageQuerry := kitty.GetUpdatesT{} // Структура для хранения структуры сообщений чата телеграм
+	weather := weatherapi.WeatherQueryT{} // Структура для хранения данных о погоде
 
-	// weather := weatherapi.WeatherQueryT{} // Структура для хранения данных о погоде
-	for {
+    for {
 		messageQuerry.GetUpdate()
 		for _, messmessage := range messageQuerry.Result {
 			lastMessages = append(lastMessages, fmt.Sprintf("%v", messmessage.Message.Text))
@@ -27,15 +29,21 @@ func main() {
 			kitty.ClearQueue()
 		}
 		for n, message := range lastMessages {
-			if message == "картинка" {
+            search := strings.ToLower(message)
+            if search == "картинка" {
 				kitty.SendPhotoByIrl(&ids[n], "https://www.ixbt.com/img/n1/news/2019/5/3/chrome-73-mode-sombre-android_large.jpg")
 			}
-			if message == "stop" {
+            if search == "погода"{
+                weather.GetWeather()
+                send := "Температура воздуха: "+ strconv.Itoa(int(weather.Fact.Temp))
+                fmt.Println(send)
+                kitty.SendMessage(&ids[n], send)
+
+            }
+            if search == "stop" || search == "стоп"{
 				return
 			}
 			lastMessages = nil
 		}
 	}
-	// weather.GetWeather()
-
 }
