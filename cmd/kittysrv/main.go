@@ -35,8 +35,9 @@ func main() {
 			}
             if search == "погода"{
                 weather.GetWeather()
-                send := "Температура воздуха: "+ strconv.Itoa(int(weather.Fact.Temp))
-                fmt.Println(send)
+                kitty.SendMessage(&ids[n], "Погода в г.Железногорск сегодня")
+                kitty.SendMessage(&ids[n], "")
+                send := "Температура воздуха составляет: "+ strconv.Itoa(int(weather.Fact.Temp)) +" °C"
                 kitty.SendMessage(&ids[n], send)
 
             }
@@ -45,5 +46,5 @@ func main() {
 			}
 			lastMessages = nil
 		}
-	}
+            	}
 }

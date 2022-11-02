@@ -80,11 +80,11 @@ type WeatherQueryT struct {
 		TempFeelLike int16   `json:"feel_like"`   // Температура по ощущеметру
 		Icon         string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
 		Conditions   string  `json:"conditions"`  // Код погодного описания
-		Wind_speed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
-		Wind_gust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
-		Wind_dir     string  `json:"wind_dir"`    // Направление ветра
-		Pressure_mm  uint16  `json:"pressure_mm"` // Давление (в мм рт.ст.).
-		Pressure_pa  uint16  `json:"pressure_pa"` // Давление (в гексопаскалях).
+		WindSpeed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
+		WindGust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
+		WindDir     string  `json:"wind_dir"`    // Направление ветра
+		PressureMM  uint16  `json:"pressure_mm"` // Давление (в мм рт.ст.).
+		PressurePas  uint16  `json:"pressure_pa"` // Давление (в гексопаскалях).
 		Humidity     uint16  `json:"humidity_mm"` // Влажность воздуха
 		Daytime      string  `json:"daytime"`     // Время суток
 		Polar        bool    `json:"polar"`       // Признак того, что время суток, указанное в поле daytime является полярным.
@@ -106,12 +106,12 @@ type WeatherQueryT struct {
 			WindSpeed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
 			WindGust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
 			WindDir     string  `json:"wind_dir"`    // Направление ветра
-			Pressure_mm uint16  `json:"pressure_mm"` // Давление (в мм рт.ст.).
-			Pressure_pa uint16  `json:"pressure_pa"` // Давление (в гексопаскалях).
+			PressureMM uint16  `json:"pressure_mm"` // Давление (в мм рт.ст.).
+			PressurePa uint16  `json:"pressure_pa"` // Давление (в гексопаскалях).
 			Humidity    uint16  `json:"humidity_mm"` // Влажность воздуха
-			Prec_mm     float32 `json:"prec_mm"`     // Прогнозируемое количество осадков
-			Prec_prob   uint16  `json:"prec_prob"`   // Вероятность выпадения осадков
-			Prec_period uint16  `json:"prec_period"` // Прогнозируемый период осадков
+			PrecMM     float32 `json:"prec_mm"`     // Прогнозируемое количество осадков
+			PrecProb   uint16  `json:"prec_prob"`   // Вероятность выпадения осадков
+			PrecPeriod uint16  `json:"prec_period"` // Прогнозируемый период осадков
 			Icon        string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
 			Condition   string  `json:"conditions"`  // Код погодного описания
 			FeelsLike   int16   `json:"feels_like"`  // Температура по ощущеметру для всемени суток
