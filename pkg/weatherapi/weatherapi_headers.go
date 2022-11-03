@@ -79,7 +79,7 @@ type WeatherQueryT struct {
 		Temp         int16   `json:"temp"`        // Температура в (С)
 		TempFeelLike int16   `json:"feel_like"`   // Температура по ощущеметру
 		Icon         string  `json:"icon"`        // Название иконки https://yastatic.net/weather/i/icons/funky/dark/< icon >.svg
-		Conditions   string  `json:"conditions"`  // Код погодного описания
+		Condition   string  `json:"condition"`  // Код погодного описания
 		WindSpeed   float32 `json:"wind_speed"`  // Скорость ветра (в м/с)
 		WindGust    float32 `json:"wind_gust"`   // Скорость порывов ветра (в м/с)
 		WindDir     string  `json:"wind_dir"`    // Направление ветра
