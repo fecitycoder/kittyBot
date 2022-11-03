@@ -6,7 +6,6 @@ import (
 	kitty "mykittybot/pkg/botapi"
 	"mykittybot/pkg/filereader"
 	"mykittybot/pkg/weatherapi"
-    "strconv"
     "strings"
 )
 
@@ -34,11 +33,17 @@ func main() {
 				kitty.SendPhotoByIrl(&ids[n], "https://www.ixbt.com/img/n1/news/2019/5/3/chrome-73-mode-sombre-android_large.jpg")
 			}
             if search == "погода"{
+                chat := &ids[n]
                 weather.GetWeather()
-                kitty.SendMessage(&ids[n], "Погода в г.Железногорск сегодня")
-                kitty.SendMessage(&ids[n], "")
-                send := "Температура воздуха составляет: "+ strconv.Itoa(int(weather.Fact.Temp)) +" °C"
-                kitty.SendMessage(&ids[n], send)
+                headerText := fmt.Sprintf("Погода в г.Железногорск")
+                conditionText := fmt.Sprintf("на улице %s", weatherapi.Condition[weather.Fact.Condition])
+
+                fmt.Println (weather)
+
+                    //fmt.Sprintf("Температура воздуха составляет: %s °C", cond[weather.Fact.Conditions])
+                kitty.SendMessage(chat, headerText)
+                kitty.SendMessage(chat, conditionText)
+
 
             }
             if search == "stop" || search == "стоп"{
