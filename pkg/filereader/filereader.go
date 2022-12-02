@@ -1,14 +1,14 @@
 package filereader
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 )
 
 func SettingsRead(path string) map[string]string {
 	set := make(map[string]string)
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		log.Print(err)
 	}
