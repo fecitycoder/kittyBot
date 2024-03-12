@@ -1,0 +1,6 @@
+github.com/fecitycoder/botapi v0.0.0-20240312132018-e76f6580ebfb h1:2cF8ccI8RfCDAZSWagU41qjSovjfCQVQavGSjJJg0Mc=
+github.com/fecitycoder/botapi v0.0.0-20240312132018-e76f6580ebfb/go.mod h1:QdI4ZdCKKAvPYr37UTcFVCvPUfF/1o5U6+nU7Vf/oEA=
+github.com/fecitycoder/filereader v0.0.0-20240312132644-1416e9c3e30d h1:n8oRm7y/+au1AjtP2zT2qu1fnKHJjQ1FPH3Og5pDqvk=
+github.com/fecitycoder/filereader v0.0.0-20240312132644-1416e9c3e30d/go.mod h1:qNS1/wjoQH0xFZtMcE+AMLklP/UspZxq20rNJDaKeH4=
+github.com/fecitycoder/weatherapi v1.0.0 h1:JZNhjJFoMuaGM2H4nxO8WWVqbPiElmpGGUCMG5BZYsA=
+github.com/fecitycoder/weatherapi v1.0.0/go.mod h1:ocC8nkOEyBniVOiCS0uG6mGlGbzONHQnUYueUJFZF44=
